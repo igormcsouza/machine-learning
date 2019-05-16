@@ -9,12 +9,36 @@ boston = load_boston()
 # Transforming the set into DF, adding Target Column.
 data = df(boston.data, columns = boston.feature_names)
 data['MED'] = boston.target
-print(data.head())
+#print(data.head())
 
 X = data.drop('MED', axis=1)
 Y = data['MED']
+print("Database Loaded")
 
-from sklearn.cross_validation import train_test_split
-
+from sklearn.model_selection import train_test_split
 Xtr, Xte, Ytr, Yte = train_test_split(X, Y, test_size = 0.33, random_state = 1)
-print(Xtr.size())
+
+from sklearn.metrics import mean_squared_error as mse
+
+from sklearn.linear_model import LinearRegression
+model = LinearRegression()
+model.fit(Xtr, Ytr)
+print("\nModel Trained Using Sklearn Linear Regression")
+print('MSE: ', mse(Yte, model.predict(Xte)))
+
+from sklearn.linear_model import SGDRegressor as gradient_descent
+print("\nModel Trained Using Sklearn Gradient Descent")
+model = gradient_descent()
+model.fit(Xtr, Ytr)
+print('MSE: ', mse(Yte, model.predict(Xte)))
+
+
+import matplotlib.pyplot as plt
+from matplotlib import rcParams
+
+Ypr = mse(Yte, model.predict(Xte))
+plt.scatter(Yte, Ypr)
+plt.xlabel("Prices")
+plt.ylabel("Predicted prices")
+# plt.plot(Xte, Ypr, color='r') # Need to figure out how does it works!
+plt.show()
