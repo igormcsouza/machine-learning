@@ -5,8 +5,9 @@ I'm trying to adress a big problem, using nlp-algorithms to solve combinatorial 
 ## Some links that may be interesting
 
 * This is a link to the article [Ptr-nets](https://arxiv.org/abs/1506.03134) article.
-* Understanding what is [Combinatorial Optimization](http://www.cs.cmu.edu/afs/cs.cmu.edu/project/learn-43/lib/photoz/.g/web/glossary/comb.html)
+* Understanding what is [Combinatorial Optimization](http://www.cs.cmu.edu/afs/cs.cmu.edu/project/learn-43/lib/photoz/.g/web/glossary/comb.html).
 * Understanding [Bin-Packing](https://en.wikipedia.org/wiki/Bin_packing_problem) optimization problem.
+* An article explaining [Bin-Packing](https://s3.amazonaws.com/academia.edu.documents/45338902/2002-COR-BPP.pdf?AWSAccessKeyId=AKIAIWOWYYGZ2Y53UL3A&Expires=1558209838&Signature=fE45%2FvF1OwM1UEiZ617%2F7RGE6vE%3D&response-content-disposition=inline%3B%20filename%3DNew_heuristics_for_one-dimensional_bin-p.pdf).
 * (Bonus) Using [Reinforcement Learning to solve Combinatorial Optmization](https://towardsdatascience.com/reinforcement-learning-for-combinatorial-optimization-d1402e396e91), from medium.
 
 ## Task list
@@ -14,7 +15,7 @@ I'm trying to adress a big problem, using nlp-algorithms to solve combinatorial 
 - [x] Create Linear and Logistic Regression
 - [X] Study Neural Networks
 - [ ] Understand some special kinds of Neural Networks
-    - [ ] Concolutional NN
+    - [ ] Convolutional NN
     - [ ] Recurrent NN
 - [ ] Learn NLPs Algorithms (LSTM, GRU)
 - [ ] Learn Attention
