@@ -7,13 +7,9 @@
 
 
 from sklearn.datasets import load_boston # Import DataSet from sklearn
-from pandas import DataFrame as df
-boston = load_boston()
-
-# Transforming the set into DF, adding Target Column.
-data = df(boston.data, columns = boston.feature_names)
-data['MED'] = boston.target
-#print(data.head())
+from pandas import DataFrame, read_csv
+data = read_csv('/home/souza/Documents/machine-learning/machine-learning/databases/boston-housing-prices.csv')
+print(data.head())
 
 X = data.drop('MED', axis=1)
 Y = data['MED']
