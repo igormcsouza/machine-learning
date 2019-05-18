@@ -53,27 +53,36 @@ print("\n-----------------------------------------------------------------------
 
 # What I'm trying to do now is to figure out wheter the number is prime or not
 
-def isPrime(n): 
-    # Corner case 
-    if n <= 1: 
-        return False
-    # Check from 2 to n-1 
-    for i in range(2, n): 
-        if (n % i == 0): 
-            return False
-    return True
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.regularizers import L1L2
 
-from sklearn.linear_model import LogisticRegression
 from numpy import reshape
+from others import isPrime, isEven
 
-X = [i for i in range(1, 1000)]
-Y = [isPrime(i) for i in X]
-Y = [1 if i else 0 for i in Y]
-X = reshape(X,(-1,1))
-Y = reshape(Y, (-1,))
-model = LogisticRegression(solver='liblinear').fit(X, Y)
-for n in X:
-    p = reshape(n, (-1,1))
-    print("The number {0} is {1}".format(n, model.predict(p)))
+Xt = [i for i in range(1, 1000)]
+Yt = [[0, 1] if isPrime(i) else [1, 0] for i in Xt]
+x_train = reshape(Xt,(-1,1))
+y_train = reshape(Yt, (-1, 2))
+x_train, x_test, y_train, y_test = train_test_split(x_train, 
+                                                    y_train, 
+                                                    test_size = 0.33, 
+                                                    random_state = 1)
+#print("{0}, {1}, {2}, {3}".format(len(x_train), len(y_train), len(x_test), len(y_test)))
 
-print('MSE: ', mse(Y, model.predict(X)))
+model = Sequential()
+model.add(Dense(2,  # output dim is 2, one score per each class
+                activation='softmax',
+                kernel_regularizer=L1L2(l1=0.0, l2=0.1),
+                input_dim=1))  # input dimension = number of features your data has
+model.compile(optimizer='rmsprop',
+              loss='binary_crossentropy',
+              metrics=['accuracy'])
+model.fit(x_train, y_train, epochs=100, validation_data=(x_test, y_test))
+
+def Prediction(n):
+    p = model.predict(x=[[n]])
+    return [0 if i < 0.5 else 1 for i in p[0]]
+
+for n in range(1, 30):
+    print("The number {0} is {1} prime".format(n, Prediction(n)))
