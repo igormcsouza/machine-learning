@@ -17,7 +17,7 @@ if len(K.tensorflow_backend._get_available_gpus()) > 0:
   from keras.layers import CuDNNGRU as GRU
 
 
-# some configuration
+# Model parameters 
 MAX_SEQUENCE_LENGTH = 100
 MAX_VOCAB_SIZE = 3000
 EMBEDDING_DIM = 50
@@ -34,8 +34,8 @@ for line in open('../databases/robert_frost.txt'):
   if not line:
     continue
 
-  input_line = '<sos> ' + line
-  target_line = line + ' <eos>'
+  input_line = '<sos> ' + line #To indicates the begining
+  target_line = line + ' <eos>' #To indicates the end
 
   input_texts.append(input_line)
   target_texts.append(target_line)
@@ -44,6 +44,9 @@ for line in open('../databases/robert_frost.txt'):
 all_lines = input_texts + target_texts
 
 # convert the sentences (strings) into integers
+'''Tokanization is the work of building vectors with tokens, which is the
+association of a word with a number. This can be done using a dictionary, for exemple,
+that represent each word by a number.'''
 tokenizer = Tokenizer(num_words=MAX_VOCAB_SIZE, filters='')
 tokenizer.fit_on_texts(all_lines)
 input_sequences = tokenizer.texts_to_sequences(input_texts)
