@@ -25,6 +25,13 @@
   <script src="js/vuejs/vue.js"></script>
   <script src="js/vuejs/contact.js"></script>
 
+  <style>
+      #center{
+        display: table;
+        margin: 0 auto;
+      }
+  </style>
+
 </head>
 
 <body>
@@ -91,7 +98,7 @@
         <!-- To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->
         <div id="contact-me">
           <div v-if="sent">
-            <h1>OBRIGADO!!!</h1>
+            <h1 id='center'>OBRIGADO!!!</h1>
           </div>
           <div v-else>  
             <form name="sentMessage" @submit="submit" action="#" novalidate>
