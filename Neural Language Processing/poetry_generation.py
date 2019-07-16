@@ -150,7 +150,7 @@ r = model.fit(
   validation_split=VALIDATION_SPLIT
 )
 
-model.save('poetry.h5')
+model.save('../models/poetry.h5')
 
 # plot some data
 plt.plot(r.history['loss'], label='loss')
