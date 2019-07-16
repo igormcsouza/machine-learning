@@ -3,79 +3,79 @@
 # What I'm trying to do now is to figure out wheter the number is prime or not
 # But something interesting, it doesn't work!!!
 
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.regularizers import L1L2
-
-from numpy import reshape
-from others import isPrime, isEven
+from pandas import read_csv
 from sklearn.model_selection import train_test_split
+
 import tensorflow as tf
 
-Xt = [i for i in range(1, 100)]
-Yt = [[0, 1] if isPrime(i) else [1, 0] for i in Xt]
-x_train = reshape(Xt,(-1,1))
-y_train = reshape(Yt, (-1, 2))
-x_train, x_test, y_train, y_test = train_test_split(x_train, 
-                                                    y_train, 
-                                                    test_size = 0.33, 
-                                                    random_state = 1)
-print("{0}, {1}, {2}, {3}".format(len(x_train), len(y_train), len(x_test), len(y_test)))
+## PREPROCESSING
 
-model = Sequential()
-model.add(Dense(2,  # output dim is 2, one score per each class
-                activation='softmax',
-                kernel_regularizer=L1L2(l1=0.0, l2=0.1),
-                input_dim=1))  # input dimension = number of features your data has
-model.compile(optimizer='rmsprop',
-              loss='binary_crossentropy',
-              metrics=['accuracy'])
-model.fit(x_train, y_train, epochs=100, validation_data=(x_test, y_test))
+# Load the database from file census.csv
+data = read_csv('../databases/census.csv')
+print(data.head())
+print(data['income'].unique())
 
-def Prediction(n):
-    p = model.predict(x=[[n]])
-    return [0 if i < 0.5 else 1 for i in p[0]]
+# We will need to make a transformation on the income column,
+# instead of using >50K or <=50K, we will use 1 and 0.
+def convert(label):
+    if label == ' >50K':
+        return 1
+    else:
+        return 0
 
-for n in range(1, 30):
-    print("The number {0} is {1} prime".format(n, Prediction(n)))
+data['income'] = data['income'].apply(convert)
 
-# Using Tensorflow
+print(data.head())
+print(data['income'].unique())
 
-X = reshape([i for i in range(1, 100)], (-1, 1))
-Y = reshape([isPrime(i) for i in Xt], (-1, 1))
+X = data.drop('income', axis=1)
+Y = data['income']
+print(X.head())
+print(Y.head())
 
-W = {'oculta': tf.Variable(tf.random_normal([1, 3]), name='w_oculta'),
-     'saida': tf.Variable(tf.random_normal([3, 1]), name='w_saida')}
-b = {'oculta': tf.Variable(tf.random_normal([3]), name='b_oculta'),
-     'saida': tf.Variable(tf.random_normal([1]), name='b_saida')}
+# data.age.hist()
 
-xph = tf.placeholder(tf.float32, [99, 1], name='xph')
-yph = tf.placeholder(tf.float32, [99, 1], name='yph')
+age = tf.feature_column.numeric_column('age')
+cAge = [tf.feature_column.bucketized_column(age, boundaries=[
+    20, 30, 40, 50, 60, 70, 80, 90
+])]
 
-oculta = tf.add(tf.matmul(xph, W['oculta']), b['oculta'])
-ativacao_oculta = tf.sigmoid(oculta)
-saida = tf.add(tf.matmul(ativacao_oculta, W['saida']), b['saida'])
-ativacao_saida = tf.sigmoid(saida)
+print(X.columns)
 
-err = tf.losses.mean_squared_error(yph, ativacao_saida)
-opt = tf.train.GradientDescentOptimizer(learning_rate=0.3).minimize(err)
+# Spliting the Categorical Columns and creating a variable with all category in all columns
+cColumnsNames = [
+    'workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex',
+    'native-country'
+]
 
-init = tf.global_variables_initializer()
+cColumns = [tf.feature_column.categorical_column_with_vocabulary_list(
+    key=key,
+    vocabulary_list=X[key].unique()
+) for key in cColumnsNames]
 
-with tf.Session() as s:
-    s.run(init)
-    for epocas in range(1000):
-        mean_erro = 0
-        _, custo = s.run([opt, err], feed_dict={xph: X, yph: Y})
-        if epocas % 20 == 0:
-            print(custo)
-    wf, bf = s.run([W, b])
+print(cColumns[0])
 
-oculta = tf.add(tf.matmul(xph, wf['oculta']), bf['oculta'])
-ativacao_oculta = tf.sigmoid(oculta)
-saida = tf.add(tf.matmul(ativacao_oculta, wf['saida']), bf['saida'])
-ativacao_saida = tf.sigmoid(saida)
+# Doing the same with the numerical columns
 
-with tf.Session() as s:
-    s.run(init)
-    print(s.run(ativacao_saida, feed_dict={xph: X}))
+nColumnsNames = [
+    'final-weight', 'education-num','capital-gain', 'capital-loos', 'hour-per-week'
+]
+
+nColumns = [tf.feature_column.numeric_column(key=key) for key in nColumnsNames]
+
+print(nColumns[0])
+
+# And then, lets wrap all together
+columns = cAge + cColumns + nColumns
+
+# We will now creat the train and test data
+Xtr, Xte, Ytr, Yte = train_test_split(X, Y, test_size=0.3)
+print('Split: {0} for testing and {1} for trainning'.format(Xte.shape[0], Xtr.shape[0]))
+
+## LOGISTIC REGRESSION
+
+trainFunc = tf.estimator.inputs.pandas_input_fn(
+    x=Xtr, y=Ytr, batch_size=32, num_epochs=None, shuffle=True
+)
+classifier = tf.estimator.LinearClassifier(feature_columns=columns)
+classifier.train(input_fn=trainFunc, steps=10000)
