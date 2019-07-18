@@ -79,3 +79,5 @@ trainFunc = tf.estimator.inputs.pandas_input_fn(
 )
 classifier = tf.estimator.LinearClassifier(feature_columns=columns)
 classifier.train(input_fn=trainFunc, steps=10000)
+
+# ...
