@@ -4,6 +4,7 @@ I'm trying to adress a big problem, using nlp-algorithms to solve combinatorial 
 
 ## Some links that may be interesting
 
+* This is a [book](https://github.com/BinRoot/TensorFlow-Book) that I found on GitHub about tensor-flow, it is written on Jupiter Notebook, could be a good basis for our research
 * I found on this [blog](http://colah.github.io/posts/2015-08-Understanding-LSTMs/) a vary nice explanation on LSTM and how does it works. A complement to that post can be found [here](https://medium.com/mlreview/understanding-lstm-and-its-diagrams-37e2f46f1714) too.
 * This is a link to the article [Ptr-nets](https://arxiv.org/abs/1506.03134) article.
 * Understanding what is [Combinatorial Optimization](http://www.cs.cmu.edu/afs/cs.cmu.edu/project/learn-43/lib/photoz/.g/web/glossary/comb.html).
