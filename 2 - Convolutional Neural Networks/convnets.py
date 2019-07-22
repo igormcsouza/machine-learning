@@ -2,6 +2,42 @@ import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 
+'''
+Artificial Inteligence - Convolutional Neural Networks
+
+Hello, Igor here. I was wondering if I can make a lib for Machine Learning an other stuff. This is 
+going to be my first try on that. This algoritm have the ability to run Convnets using Costum Extima-
+tors from Tensor Flow. I'm still figuring out ways of doing this. But this seems to wokr so far.
+
+Ways of using...
+
+from convnets import Model
+
+# You have to put all the data on a Dictionary like this:
+dataset = {
+    'Xtr': ...Trainning data to train
+    'Xte': ...Test data to predict
+    'Ytr': ...Trainning labels to train
+    'Yte': ...Test labels to predict
+}
+
+my_model = Model(dataset)
+
+# Model has some atributes, they are all defaulted, unless dataset, they are:
+    dataset: You now this one
+    frame: Size of the actual image
+    kernel_size: Size of the filter, it has to be a tuple (X, X)
+    self.pool_size: Tuple for the pooling 
+    self.strides: How many columns the pooling will be surpress
+    self.units: size of the Dense Network
+
+my_model.starter() # Must be done first, it will create the classifier
+my_model.train() # Trainning the model
+print(my_model.evaluate()) # Evaluate the actual trainning session
+print(my_model.predict(Xte[0])) # Predict one or more data.
+
+'''
+
 class Model():
     def __init__(
         self, database, 
@@ -26,14 +62,13 @@ class Model():
         print("Model Created Successfully...")
 
     ''' Function convet
-    -> This function is mandatory! So the custume Estimator could work. Also those variables are mandatory
-    in this function.
+    -> This function is mandatory! So the custume Estimator could work. Also those params are 
+    mandatory in this function.
 
-    features, means the pixels of the pictures above.
+    features, means the pixels of the pictures.
     labels, the output expected
     mode (optinal), to identify wheter is a training, evaluation or prediction
     '''
-
     def convnet(self, features, labels, mode):
         _input = tf.reshape(features['X'], [-1, self.frame[0], self.frame[1], 1])
         
@@ -96,9 +131,10 @@ class Model():
         )
         # Give: [batch_size, 10]
         
-        #
+        # Get only the grater percentage
         predictions = tf.argmax(_output, axis=1)
         
+        # Uses the function as predicted
         if mode==tf.estimator.ModeKeys.PREDICT:
             return tf.estimator.EstimatorSpec(
                 mode=mode,
