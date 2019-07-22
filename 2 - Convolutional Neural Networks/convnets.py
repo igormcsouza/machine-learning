@@ -5,13 +5,14 @@ import matplotlib.pyplot as plt
 '''
 Artificial Inteligence - Convolutional Neural Networks
 
-Hello, Igor here. I was wondering if I can make a lib for Machine Learning an other stuff. This is 
-going to be my first try on that. This algoritm have the ability to run Convnets using Costum Extima-
-tors from Tensor Flow. I'm still figuring out ways of doing this. But this seems to wokr so far.
+Hello, Igor here. I was wondering if I can make a lib for Machine Learning an other stuff. 
+This is going to be my first try on that. This algoritm have the ability to run Convnets 
+using Costum Extimators from Tensor Flow. I'm still figuring out ways of doing this. But 
+this seems to wokr so far.
 
 Ways of using...
 
-from convnets import Model
+>>> from convnets import Model
 
 # You have to put all the data on a Dictionary like this:
 dataset = {
@@ -21,34 +22,28 @@ dataset = {
     'Yte': ...Test labels to predict
 }
 
-my_model = Model(dataset)
+>>> my_model = Model(dataset)
 
 # Model has some atributes, they are all defaulted, unless dataset, they are:
     dataset: You now this one
     frame: Size of the actual image
     kernel_size: Size of the filter, it has to be a tuple (X, X)
-    self.pool_size: Tuple for the pooling 
-    self.strides: How many columns the pooling will be surpress
-    self.units: size of the Dense Network
+    pool_size: Tuple for the pooling 
+    strides: How many columns the pooling will be surpress
+    units: size of the Dense Network
 
-my_model.starter() # Must be done first, it will create the classifier
-my_model.train() # Trainning the model
-print(my_model.evaluate()) # Evaluate the actual trainning session
-print(my_model.predict(Xte[0])) # Predict one or more data.
+>>> my_model.starter() # Must be done first, it will create the classifier
+>>> my_model.train() # Trainning the model
+>>> print(my_model.evaluate()) # Evaluate the actual trainning session
+>>> print(my_model.predict(Xte[0])) # Predict one or more data.
 
 '''
 
 class Model():
-    def __init__(
-        self, database, 
-        frame=(28,28),
-        kernel_size=(5,5),
-        pool_size=(2,2),
-        strides=2,
-        units=1024):
+    def __init__(self, database, frame=(28,28), kernel_size=(5,5), pool_size=(2,2),
+        strides=2, units=1024):
 
-        self.Xtr = database['Xtr']
-        self.Xte = database['Xte']
+        self.Xtr, self.Xte = database['Xtr'], database['Xte']
         self.Ytr = np.asarray(database['Ytr'], dtype=np.int32)
         self.Yte = np.asarray(database['Yte'], dtype=np.int32)
         self.frame = frame
@@ -65,14 +60,14 @@ class Model():
     -> This function is mandatory! So the custume Estimator could work. Also those params are 
     mandatory in this function.
 
-    features, means the pixels of the pictures.
-    labels, the output expected
-    mode (optinal), to identify wheter is a training, evaluation or prediction
+    Features: Means the pixels of the pictures.
+    Labels: The output expected
+    Mode(optinal): To identify wheter is a training, evaluation or prediction
     '''
     def convnet(self, features, labels, mode):
         _input = tf.reshape(features['X'], [-1, self.frame[0], self.frame[1], 1])
         
-        # Recebe: [batch_size, 28, 28, 1]
+        # Get: [batch_size, 28, 28, 1]
         conv1 = tf.layers.conv2d(
             inputs=_input, 
             filters=32,
@@ -80,15 +75,15 @@ class Model():
             activation=tf.nn.relu,
             padding='same'
         )
-        # Devolve: [batch_size, 28, 28, 32]
+        # Give: [batch_size, 28, 28, 32]
         
-        # Recebe: [batch_size, 28, 28, 32]
+        # Get: [batch_size, 28, 28, 32]
         pooling1 = tf.layers.max_pooling2d(
             inputs=conv1, pool_size=self.pool_size, strides=self.strides
         )
-        # Devolve: [batch_size, 14, 14, 32]
+        # Give: [batch_size, 14, 14, 32]
         
-        # Recebe: [batch_size, 14, 14, 32]
+        # Get: [batch_size, 14, 14, 32]
         conv2 = tf.layers.conv2d(
             inputs=pooling1, 
             filters=64,
@@ -96,13 +91,13 @@ class Model():
             activation=tf.nn.relu,
             padding='same'
         )
-        # Devolve: [batch_size, 14, 14, 64]
+        # Give: [batch_size, 14, 14, 64]
         
-        # Recebe: [batch_size, 14, 14, 64]
+        # Get: [batch_size, 14, 14, 64]
         pooling2 = tf.layers.max_pooling2d(
             inputs=conv2, pool_size=self.pool_size, strides=self.strides
         )
-        # Devolve: [batch_size, 7, 7, 64]
+        # Give: [batch_size, 7, 7, 64]
         
         # Get: [batch_size, 7, 7, 64]
         size = pooling2.shape[1] * pooling2.shape[2] * pooling2.shape[3]
@@ -117,7 +112,8 @@ class Model():
         )
         # Give: [batch_size, 1024]
         
-        # This one ...
+        # This one helps to improve the accuracy, because eliminate a % of the input
+        # so the nets could not be overfitted
         dropout = tf.layers.dropout(
             inputs=dense,
             rate=0.2,
@@ -142,6 +138,7 @@ class Model():
             )
         
         erro = tf.losses.sparse_softmax_cross_entropy(labels=labels, logits=_output)
+        
         if mode==tf.estimator.ModeKeys.TRAIN:
             optmizer = tf.train.AdamOptimizer(learning_rate=0.001)
             train = optmizer.minimize(erro, global_step=tf.train.get_global_step())
