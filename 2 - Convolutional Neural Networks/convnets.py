@@ -138,7 +138,7 @@ class Model():
             )
         
         erro = tf.losses.sparse_softmax_cross_entropy(labels=labels, logits=_output)
-        
+
         if mode==tf.estimator.ModeKeys.TRAIN:
             optmizer = tf.train.AdamOptimizer(learning_rate=0.001)
             train = optmizer.minimize(erro, global_step=tf.train.get_global_step())
@@ -165,7 +165,7 @@ class Model():
         self.classifier = tf.estimator.Estimator(model_fn=self.convnet)
         print("DONE CLASSIFIER!")
 
-    def train(self, batch_size=128):
+    def train(self, batch_size=128, steps=200):
         print("TRAINNING MODEL...")
         train_function = tf.estimator.inputs.numpy_input_fn(
             x={'X': self.Xtr}, 
@@ -175,7 +175,7 @@ class Model():
             shuffle=True
         ) #Função de treinamento
 
-        self.classifier.train(input_fn=train_function, steps=200)
+        self.classifier.train(input_fn=train_function, steps=steps)
         print("DONE TRAINNING!")
         
     def evaluate(self, epochs=1):

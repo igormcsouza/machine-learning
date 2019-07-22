@@ -11,6 +11,6 @@ my_model = Model({
 })
 
 my_model.starter()
-my_model.train()
+my_model.train(steps=10000)
 print(my_model.evaluate())
 print(my_model.predict(Xte[0]))
