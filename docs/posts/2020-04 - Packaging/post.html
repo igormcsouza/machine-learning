@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="Blog" content="">
+  <meta name="Igor Souza" content="">
+  <!--removed html from url, but still is html-->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+  <title>Machine Learning - Introdução</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="../../css/clean-blog.min.css" rel="stylesheet">
+
+  <!-- Custom stylesheet, it must be in the same directory as the html file -->
+  <link rel="stylesheet" href="custom.css">
+
+  <!-- Loading mathjax macro -->
+  <!-- Load mathjax -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML"></script>
+  
+  <!-- MathJax configuration -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+  </script>
+  <!-- End of mathjax configuration -->
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="../../index.html">Machine Learning</a>
+      <button 
+        class="navbar-toggler navbar-toggler-right" 
+        type="button" 
+        data-toggle="collapse" 
+        data-target="#navbarResponsive" 
+        aria-controls="navbarResponsive" 
+        aria-expanded="false" 
+        aria-label="Toggle navigation"> Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="../../index.html">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../about.html">Sobre</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#post">Introdução</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../contact.html">Contato</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('img/packaging.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div id='post'>
+            <div class="post-heading">
+              <h1>Criando Pacotes em Python</h1>
+              <h2 class="subheading">
+                Guardando seus trabalhos para serem usados depois!
+              </h2>
+              <span class="meta">Posted by <a href="#">Igor Souza</a> on April 05, 2020</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article id=post>
+    <!-- PAST THE JUPYTER HERE! -->
+    <div tabindex="-1" id="notebook" class="border-box-sizing">
+      <div class="container" id="notebook-container">
+  
+        <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+        </div><div class="inner_cell">
+        <div class="text_cell_render border-box-sizing rendered_html">
+        <p>Esse assunto, para mim, é bem legal de ser falado por que foi uma de minhas maiores dores ao iniciar na programação. A primeira vez que tive contato com esse estilo de código foi quando estava nos primeiros anos da faculdade aprendendo a usar os Headers da linguagem C, achava muito interessante como conseguiamos guardar funções e edita-las para uso futuro.</p>
+        <p>Esse conhecimento avançou quando iniciei meus estudos de Java, os pacotes em java são muito fortes e a linguagem orientada a objeto ajuda muito nesse processo.</p>
+        <p>Passei muitos anos programando em Python, mas sem nunca ter usado pacotes, quando finalmente me veio a ideia de salvar alguns códigos que eu usava muito em uma pasta comum aonde eu poderia acessar de outros projetos. Nesta fase eu tinha apenas uma pasta com alguns scripts e nosso famoso <code>__init__.py</code>.</p>
+        <p>O conhecimento foi melhorando e finalmente fiz meu primeiro pacote do zero. Esse primeiro pacote me ajudava a automatizar alguns trabalhos que eu fazia constantemente, inclusive os de usar com <a href="https://e-tinet.com/linux/sincronizacao-de-arquivos-no-linux-rsync/">rsync</a>. Desde então fiz muitos upgrades nesse pequeno utility e hoje em dia até download de videos da internet faço por ele. Aonde quer que eu esteja basta instalar ele e já consigo facilmente fazer pequenos trabalhos diários que são bem chatos de fazer sem.</p>
+        <p>Pacotes vai muito além disso, imagine seu projeto de Ciência de Dados, as vezes ele pode ser bem complexo e você precisa organizar de forma que seja fácil e rápido de acessar. Outro motivo pode ser simplemente um pacote de utilidades, ferramentas ou jeito de programação que te acompanham em vários lugares, ter um pacote pronto e disponível ajuda muito nesses casos.</p>
+        <p>Hoje vou ensinar um jeito fácil de criar seus pacotes e usar em seus projetos daqui pra frente! Vamos lá ao que interessa.</p>
+        
+        </div>
+        </div>
+        </div>
+        <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+        </div><div class="inner_cell">
+        <div class="text_cell_render border-box-sizing rendered_html">
+        <h2 id="Iniciando-seu-primeiro-pacote">Iniciando seu primeiro pacote<a class="anchor-link" href="#Iniciando-seu-primeiro-pacote">&#182;</a></h2><p>A estrutura de um pacote é muito simples. Para simplificar o método vamos criar juntos um pacote que faz calculos matemáticos no terminal. Por exemplo <code>add 2 2</code>, deve retornar <code>4</code>. Vamos lá por a mão na massa.</p>
+        <p>A estrutura do pacote deve feita da seguinte forma:</p>
+        
+        <pre><code>|calculadora
+        |-- setup.py
+        |-- calculadora
+        |-- -- __init__.py
+        |-- -- add.py</code></pre>
+        <p>Para esse projeto só vamos trabalhar com o pacote, mas se você quiser adicionar outros sub-pacotes segue a mesma lógica, só tendo atenção nos caminhos dos arquivos.</p>
+        <p>Vamos dar uma olhada no <code>setup.py</code></p>
+        
+        </div>
+        </div>
+        </div>
+        <div class="cell border-box-sizing code_cell rendered">
+        <div class="input">
+        <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+        <div class="inner_cell">
+            <div class="input_area">
+        <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span>
+        <span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">find_packages</span>
+        
+        <span class="n">setup</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;calculadora&#39;</span><span class="p">,</span> 
+            <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.0.1&#39;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Faz calculos no terminal&#39;</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="s1">&#39;Igor Souza&#39;</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://igormcsouza.github.io&#39;</span><span class="p">,</span>
+            <span class="n">install_requires</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;numpy&#39;</span><span class="p">],</span>
+            <span class="n">packages</span><span class="o">=</span><span class="n">find_packages</span><span class="p">(),</span>
+            <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;console_scripts&#39;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s1">&#39;add=calculadora.add:main&#39;</span>
+                <span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+        </pre></div>
+        
+            </div>
+        </div>
+        </div>
+        
+        </div>
+        <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+        </div><div class="inner_cell">
+        <div class="text_cell_render border-box-sizing rendered_html">
+        <p>Esse é o arquivo que vai comandar tudo no pacote é o <code>setup.py</code>. Vou explicar o que cada desses parametros significa. Esses primeiros parametros não são obrigatórios, mas ajudam a identificar o projeto.</p>
+        <p><code>name</code>: É o nome o projeto, tente manter ele simples, pode dar problema com nomes.</p>
+        <p><code>version</code>: É a versão do seu projeto, eu sempre inicio no 0.0.1 e sigo de acordo com o costume.</p>
+        <p><code>description</code>: É a descrição do projeto, pode ser escrito qualquer coisa que ajude a reconhecer o projeto.</p>
+        <p><code>author</code>: Quem criou o projeto.</p>
+        <p><code>url</code>: O link para o repositório se tiver, ou qualquer site que esteja ligado ao projeto</p>
+        <p>Agora as coisas começam a ficar interessantes, os parametros abaixo vão lhe dar diretamente com o projeto e suas funcionalidades.</p>
+        <p><code>install_requires</code>: São todos os pacotes pré-requisitos do projeto, você pode criar uma lista como a do <code>requirements.txt</code>.</p>
+        <p><code>packages=find_packages()</code>: Deixe como está.</p>
+        <p><code>entry_points</code>: São os entry points do projeto. A chave <code>console_scripts</code> lhe permite usar palavras chaves para ativar certas funcionalidades do seu projeto, no nosso caso vamos usar o <code>add</code> para chamar nossa calculadora, para especificar sua funcionalidade apenas passar o caminho, no exemplo a função <code>main</code> em calculadora.add.</p>
+        
+        </div>
+        </div>
+        </div>
+        <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+        </div><div class="inner_cell">
+        <div class="text_cell_render border-box-sizing rendered_html">
+        <p>No nosso <code>add.py</code> vamos adicionar o seguinte:</p>
+        
+        </div>
+        </div>
+        </div>
+        <div class="cell border-box-sizing code_cell rendered">
+        <div class="input">
+        <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+        <div class="inner_cell">
+            <div class="input_area">
+        <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+        
+        <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+        </pre></div>
+        
+            </div>
+        </div>
+        </div>
+        
+        </div>
+        <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+        </div><div class="inner_cell">
+        <div class="text_cell_render border-box-sizing rendered_html">
+        <p>Nosso pacote está pronto! :)</p>
+        <p>Agora ele precisa ser instalado. Após você criar seu <a href="https://www.treinaweb.com.br/blog/criando-ambientes-virtuais-para-projetos-python-com-o-virtualenv/">ambiente virtual</a> você precisa fazer a instalação na raiz do projeto usando o comando abaixo.</p>
+        
+        <pre><code>pip install -e .</code></pre>
+        <p>Dessa forma você é capaz de, além de instalar pacotes, fazer alterações sem precisar reinstalar o pacote.</p>
+        <p>Pronto! Está instalado e pronto para usar, edite o <code>setup.py</code> sempre que quiser fazer alterações no projeto. Matenha seu projeto atualizado. Sempre que adicionar uma pasta inicie ela com o <code>__init__.py</code>.</p>
+        
+        </div>
+        </div>
+        </div>
+        <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+        </div><div class="inner_cell">
+        <div class="text_cell_render border-box-sizing rendered_html">
+        
+        <pre><code>(utils) souza:calculadora$ add 1 2
+        3</code></pre>
+        
+        </div>
+        </div>
+        </div>
+        <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+        </div><div class="inner_cell">
+        <div class="text_cell_render border-box-sizing rendered_html">
+        <p>Agora você está pronto para fazer seus projetinhos em Python! :P</p>
+        
+        </div>
+        </div>
+        </div>
+        
+            </div>
+        </div>
+        </div>
+        
+        </div>
+      </div>
+    </div>
+    <!-- PAST THE JUPYTER HERE! -->
+  </article>
+
+  <hr>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            <li class="list-inline-item">
+              <a href="https://www.facebook.com/igormcsouza">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://github.com/igormcsouza/machine-learning">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy; Igor Souza 2019</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../../vendor/jquery/jquery.min.js"></script>
+  <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="../../js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
